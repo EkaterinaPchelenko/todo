@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react'
+import React from 'react';
+import axios from "axios";
+
 import UserList from "./components/User";
 
 
@@ -13,18 +15,19 @@ class App extends React.Component{
   }
 
   componentDidMount() {
-    const users = [
-      {'username': 'Kate',
-      'first_name': 'Ekaterina',
-      'last_name': 'Pchelenko',
-      'email': 'kate@mail.com',
-      },
-      {'username': 'Ivan',
-      'first_name': 'Ivan',
-      'last_name': 'Ivanov',
-      'email': 'ivan@mail.com',
-      },
-    ]
+    axios.get()
+    // const users = [
+    //   {'username': 'Kate',
+    //   'first_name': 'Ekaterina',
+    //   'last_name': 'Pchelenko',
+    //   'email': 'kate@mail.com',
+    //   },
+    //   {'username': 'Ivan',
+    //   'first_name': 'Ivan',
+    //   'last_name': 'Ivanov',
+    //   'email': 'ivan@mail.com',
+    //   },
+    // ]
 
     this.setState(
         {
