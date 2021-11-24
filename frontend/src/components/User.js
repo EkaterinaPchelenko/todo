@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const UserItem = ({user}) => {
-    return(
+    return (
         <tr>
             <td>{user.username}</td>
             <td>{user.first_name}</td>
@@ -14,7 +14,7 @@ const UserItem = ({user}) => {
 }
 
 const UserList = ({users}) => {
-    return(
+    return (
 
         <table>
             <th>Username</th>
@@ -25,5 +25,6 @@ const UserList = ({users}) => {
         </table>
     )
 }
+
 
 export default UserList

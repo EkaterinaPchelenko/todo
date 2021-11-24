@@ -4,6 +4,8 @@ import React from 'react';
 import axios from "axios";
 
 import UserList from "./components/User";
+import MenuFooter from "./components/MenuFooter";
+
 
 
 class App extends React.Component {
@@ -49,21 +51,13 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <a href='#'>Users  </a>
-                    <a href='#'>Projects  </a>
-                    <a href='#'>To do  </a>
-                </div>
 
-                <div>
-                    <UserList users={this.state.users}/>
-                </div>
-
-                <footer>
+                <MenuFooter info ={
                     <div>
-                        <p>Copyright &copy; GeekShop 2021</p>
+                        <UserList users={this.state.users}/>
                     </div>
-                </footer>
+                }/>
+
             </div>
         );
     }
