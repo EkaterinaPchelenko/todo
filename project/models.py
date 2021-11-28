@@ -10,10 +10,10 @@ class Project(models.Model):
         return self.name
 
 class ToDo(models.Model):
-    project = models.OneToOneField(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    creator = models.OneToOneField(User, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True, db_index=True)
 # Create your models here.
