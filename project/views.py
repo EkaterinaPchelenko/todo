@@ -33,7 +33,7 @@ class ToDoModelViewSet(ModelViewSet):
    queryset = ToDo.objects.all()
    serializer_class = ToDoModelSerializer
    pagination_class = ToDoLimitOffsetPagination
-
+   filterset_fields = ['project']
    def perform_destroy(self, instance):
       instance.is_active = False
       instance.save()
