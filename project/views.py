@@ -10,6 +10,8 @@ from project.serializers import ProjectModelSerializer, ToDoModelSerializer
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
    default_limit = 10
 
+class ToDoLimitOffsetPagination(LimitOffsetPagination):
+   default_limit = 20
 
 class ProjectFilter(FilterSet):
    name = CharFilter(lookup_expr='contains')
@@ -17,6 +19,7 @@ class ProjectFilter(FilterSet):
    class Meta:
        model = Project
        fields = ['name']
+
 
 
 class ProjectModelViewSet(ModelViewSet):
@@ -29,7 +32,11 @@ class ProjectModelViewSet(ModelViewSet):
 class ToDoModelViewSet(ModelViewSet):
    queryset = ToDo.objects.all()
    serializer_class = ToDoModelSerializer
+   pagination_class = ToDoLimitOffsetPagination
 
+   def perform_destroy(self, instance):
+      instance.is_active = False
+      instance.save()
 
 
 
