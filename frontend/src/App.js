@@ -7,7 +7,7 @@ import UserList from "./components/User";
 import ProjectList from "./components/Project";
 import MenuFooter from "./components/MenuFooter";
 
-import {HashRouter, Route} from "react-router-dom";
+import {HashRouter, Link, Route} from "react-router-dom";
 
 
 class App extends React.Component {
@@ -34,7 +34,7 @@ class App extends React.Component {
 
         axios.get('http://127.0.0.1:8000/api/projects/').then(
             response => {
-                const projects = response.data
+                const projects = response.data.results
 
                 this.setState(
                     {
@@ -46,19 +46,29 @@ class App extends React.Component {
     }
 
 
-
     render() {
         return (
             <div>
-                <MenuFooter info ={
-                    <div>
-                        <HashRouter>
-                            <Route exact path='/' component={() => <UserList users={this.state.users}/>} />
-                            <Route exact path='projects/' component={() => <ProjectList projects={this.state.projects}/>} />
-                        </HashRouter>
-                    </div>
-                }/>
+                <div>
+                    <HashRouter>
 
+                        <nav>
+                            <ul>
+                                <Link to='/'>Users</Link>
+                            </ul>
+                            <ul>
+                                <Link to='/projects'>Projects</Link>
+                            </ul>
+                            {/*<ul>*/}
+                            {/*    <Link to='/'>Users</Link>*/}
+                            {/*</ul>*/}
+
+                        </nav>
+
+                        <Route exact path='/' component={() => <UserList users={this.state.users}/>}/>
+                        <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
+                    </HashRouter>
+                </div>
             </div>
         );
     }

@@ -5,8 +5,8 @@ const MenuFooter = ({info}) => {
     return (
         <div>
             <div>
-                <a href='#'>Users </a>
-                <a href='#'>Projects </a>
+                <a href='/'>Users </a>
+                <a href='/projects'>Projects </a>
                 <a href='#'>To do </a>
             </div>
 

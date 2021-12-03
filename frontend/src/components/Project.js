@@ -3,13 +3,9 @@ import React from 'react'
 const ProjectItem = ({project}) => {
     return (
         <tr>
-            {/*<td>{project.id}</td>*/}
-            {/*<td>{project.name}</td>*/}
-            {/*<td>{project.repository_link}</td>*/}
-            <td>t</td>
-            <td>t</td>
-            <td>t</td>
-            <td>t</td>
+            <td>{project.id}</td>
+            <td>{project.name}</td>
+            <td>{project.repository_link}</td>
         </tr>
     )
 }
