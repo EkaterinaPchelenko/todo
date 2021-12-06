@@ -67,30 +67,19 @@ class App extends React.Component {
                 <div>
                     <HashRouter>
 
-                        <nav>
-                            <ul>
-                                <Link to='/'>Users</Link>
-                            </ul>
-                            <ul>
-                                <Link to='/projects'>Projects</Link>
-                            </ul>
-                            <ul>
-                                <Link to='/todo'>To Do</Link>
-                            </ul>
-                            {/*<ul>*/}
-                            {/*    <Link to='/'>Users</Link>*/}
-                            {/*</ul>*/}
+                        <MenuFooter info ={
+                            <div>
+                                <Switch>
+                                    <Route exact path='/' component={() => <UserList users={this.state.users}/>}/>
+                                    <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
+                                    <Route exact path='/todo' component={() => <ToDoList todo={this.state.todo}/>}/>
 
-                        </nav>
-                        <Switch>
-                            <Route exact path='/' component={() => <UserList users={this.state.users}/>}/>
-                            <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
-                            <Route exact path='/todo' component={() => <ToDoList todo={this.state.todo}/>}/>
+                                    <Redirect from='/users' to='/' />
 
-                            <Redirect from='/users' to='/' />
-
-                            <Route component={NotFound404}/>
-                        </Switch>
+                                    <Route component={NotFound404}/>
+                                </Switch>
+                            </div>
+                         }/>
                     </HashRouter>
                 </div>
             </div>

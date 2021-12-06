@@ -6,8 +6,8 @@ const ToDoItem = ({todo}) => {
         <tr>
             <td>{todo.text}</td>
             <td>{todo.created_at}</td>
-            <td>{todo.creator_id}</td>
-            <td>{todo.project_id}</td>
+            <td>{todo.creator}</td>
+            <td>{todo.project}</td>
         </tr>
     )
 }

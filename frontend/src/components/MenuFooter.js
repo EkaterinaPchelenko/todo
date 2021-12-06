@@ -1,13 +1,20 @@
 import React from 'react'
 import UserList from "./User";
+import {Link} from "react-router-dom";
 
 const MenuFooter = ({info}) => {
     return (
         <div>
             <div>
-                <a href='/'>Users </a>
-                <a href='/projects'>Projects </a>
-                <a href='#'>To do </a>
+                <ul>
+                    <Link to='/'>Users</Link>
+                </ul>
+                <ul>
+                    <Link to='/projects'>Projects</Link>
+                </ul>
+                <ul>
+                    <Link to='/todo'>To Do</Link>
+                </ul>
             </div>
 
             <div>
