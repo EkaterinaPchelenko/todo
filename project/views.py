@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django_filters.rest_framework import FilterSet, CharFilter
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from project.models import Project, ToDo

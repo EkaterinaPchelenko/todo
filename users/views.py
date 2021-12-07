@@ -1,4 +1,5 @@
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin
+from rest_framework.permissions import IsAdminUser
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .models import User
