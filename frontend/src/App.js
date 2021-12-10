@@ -12,6 +12,7 @@ import {HashRouter, Link, Route, Switch, Redirect} from "react-router-dom";
 import NotFound404 from "./components/NotFound404";
 import ToDoList from "./components/todo";
 import LoginForm from "./components/LoginForm";
+import User from "./components/User";
 
 
 class App extends React.Component {
@@ -22,6 +23,7 @@ class App extends React.Component {
             'projects': [],
             'todo': [],
             'token': [],
+            'username': [],
 
         }
     }
@@ -39,6 +41,7 @@ class App extends React.Component {
 
     logout(){
         this.set_token('')
+        this.state.username = []
     }
 
     get_token_from_storage(){
@@ -53,6 +56,7 @@ class App extends React.Component {
             response =>{
                 this.set_token(response.data['token'])
                 console.log(response.data)
+                this.usernameDefine(username)
             }
         ).catch(error => alert('Неверный логин или пароль'))
 
@@ -121,15 +125,19 @@ class App extends React.Component {
         // this.load_data()
     }
 
+    usernameDefine(username){
+        this.state.username = username
+    }
+
 
     render() {
         return (
             <div>
                 <div>
                     <HashRouter>
-
                         {/*<MenuFooter info ={*/}
                         <div>
+                            <h3>{this.state.username}</h3>
                             <ul>
                                 <Link to='/'>Users</Link>
                             </ul>
