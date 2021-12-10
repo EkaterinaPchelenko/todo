@@ -108,7 +108,21 @@ class App extends React.Component {
                 <div>
                     <HashRouter>
 
-                        <MenuFooter info ={
+                        {/*<MenuFooter info ={*/}
+                        <div>
+                            <ul>
+                                <Link to='/'>Users</Link>
+                            </ul>
+                            <ul>
+                                <Link to='/projects'>Projects</Link>
+                            </ul>
+                            <ul>
+                                <Link to='/todo'>To Do</Link>
+                            </ul>
+                            <ul>
+                                {this.is_auth() ? <button onClick={() => this.logout()}> Logout </button> : <Link  to='/login'>Login</Link>}
+                            </ul>
+                        </div>
                             <div>
                                 <Switch>
                                     <Route exact path='/' component={() => <UserList users={this.state.users}/>}/>
@@ -121,7 +135,12 @@ class App extends React.Component {
                                     <Route component={NotFound404}/>
                                 </Switch>
                             </div>
-                         }/>
+                        <footer>
+                            <div>
+                                <p>Copyright &copy; GeekShop 2021</p>
+                            </div>
+                        </footer>
+                         {/*}/>*/}
                     </HashRouter>
                 </div>
             </div>

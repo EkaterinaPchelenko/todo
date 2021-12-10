@@ -16,7 +16,7 @@ const MenuFooter = ({info}) => {
                     <Link to='/todo'>To Do</Link>
                 </ul>
                 <ul>
-                    {App.is_auth ? <button onClick={() => App.logout}> Logout </button> : <Link  to='/login'>Login</Link>}
+                    {App.is_auth() ? <button onClick={() => App.logout()}> Logout </button> : <Link  to='/login'>Login</Link>}
                 </ul>
             </div>
 
