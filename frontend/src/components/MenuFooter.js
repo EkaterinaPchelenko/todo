@@ -1,5 +1,5 @@
 import React from 'react'
-import UserList from "./User";
+import App from "../App.js"
 import {Link} from "react-router-dom";
 
 const MenuFooter = ({info}) => {
@@ -14,6 +14,9 @@ const MenuFooter = ({info}) => {
                 </ul>
                 <ul>
                     <Link to='/todo'>To Do</Link>
+                </ul>
+                <ul>
+                    {App.is_auth ? <button onClick={() => App.logout}> Logout </button> : <Link  to='/login'>Login</Link>}
                 </ul>
             </div>
 

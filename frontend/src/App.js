@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import axios from "axios";
+import Cookies from "universal-cookie/lib";
 
 import UserList from "./components/User";
 import ProjectList from "./components/Project";
@@ -10,6 +11,7 @@ import MenuFooter from "./components/MenuFooter";
 import {HashRouter, Link, Route, Switch, Redirect} from "react-router-dom";
 import NotFound404 from "./components/NotFound404";
 import ToDoList from "./components/todo";
+import LoginForm from "./components/LoginForm";
 
 
 class App extends React.Component {
@@ -19,10 +21,44 @@ class App extends React.Component {
             'users': [],
             'projects': [],
             'todo': [],
+            'token': [],
+
         }
     }
 
-    componentDidMount() {
+    set_token(token){
+        console.log(token)
+        const cookies = new Cookies()
+        cookies.set('token', token)
+        this.setState({'token': token})
+    }
+
+    is_auth(){
+        return !!this.state.token
+    }
+
+    logout(){
+        this.set_token('')
+    }
+
+    get_token_from_storage(){
+        const cookies = new Cookies()
+        const token = cookies.get('token')
+        this.setState({'token': token})
+    }
+
+    get_token(username, password){
+        const data = {username: username, password: password}
+        axios.post('http://127.0.0.1:8000/api-token-auth/', data).then(
+            response =>{
+                this.set_token(response.data['token'])
+                console.log(response.data)
+            }
+        ).catch(error => alert('Неверный логин или пароль'))
+
+    }
+
+    load_data(){
         axios.get('http://127.0.0.1:8000/api/users/').then(
             response => {
                 const users = response.data.results
@@ -60,6 +96,11 @@ class App extends React.Component {
         ).catch(error => console.log(error))
     }
 
+    componentDidMount() {
+        this.get_token_from_storage()
+        this.load_data()
+    }
+
 
     render() {
         return (
@@ -73,6 +114,7 @@ class App extends React.Component {
                                     <Route exact path='/' component={() => <UserList users={this.state.users}/>}/>
                                     <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
                                     <Route exact path='/todo' component={() => <ToDoList todo={this.state.todo}/>}/>
+                                    <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)}/>}/>
 
                                     <Redirect from='/users' to='/' />
 
