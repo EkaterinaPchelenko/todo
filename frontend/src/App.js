@@ -30,7 +30,7 @@ class App extends React.Component {
         console.log(token)
         const cookies = new Cookies()
         cookies.set('token', token)
-        this.setState({'token': token})
+        this.setState({'token': token}, () => this.load_data())
     }
 
     is_auth(){
@@ -44,7 +44,7 @@ class App extends React.Component {
     get_token_from_storage(){
         const cookies = new Cookies()
         const token = cookies.get('token')
-        this.setState({'token': token})
+        this.setState({'token': token}, () => this.load_data())
     }
 
     get_token(username, password){
@@ -59,7 +59,8 @@ class App extends React.Component {
     }
 
     load_data(){
-        axios.get('http://127.0.0.1:8000/api/users/').then(
+        const headers = this.get_headers()
+        axios.get('http://127.0.0.1:8000/api/users/', {headers}).then(
             response => {
                 const users = response.data.results
 
@@ -69,9 +70,12 @@ class App extends React.Component {
                     }
                 )
             }
-        ).catch(error => console.log(error))
+        ).catch(error => {
+            console.log(error)
+            this.setState({users: []})
+        })
 
-        axios.get('http://127.0.0.1:8000/api/projects/').then(
+        axios.get('http://127.0.0.1:8000/api/projects/', {headers}).then(
             response => {
                 const projects = response.data.results
 
@@ -81,9 +85,12 @@ class App extends React.Component {
                     }
                 )
             }
-        ).catch(error => console.log(error))
+        ).catch(error => {
+            console.log(error)
+            this.setState({projects: []})
+        })
 
-        axios.get('http://127.0.0.1:8000/api/todo/').then(
+        axios.get('http://127.0.0.1:8000/api/todo/', {headers}).then(
             response => {
                 const todo = response.data.results
 
@@ -93,12 +100,25 @@ class App extends React.Component {
                     }
                 )
             }
-        ).catch(error => console.log(error))
+        ).catch(error => {
+            console.log(error)
+            this.setState({todo: []})
+        })
+    }
+
+    get_headers(){
+        let headers = {
+            'Content-Type':'application/json'
+        }
+        if (this.is_auth()){
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
     }
 
     componentDidMount() {
         this.get_token_from_storage()
-        this.load_data()
+        // this.load_data()
     }
 
 
