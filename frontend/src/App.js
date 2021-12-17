@@ -165,7 +165,7 @@ class App extends React.Component {
                             </div>
                         <footer>
                             <div>
-                                <p>Copyright &copy; GeekShop 2021</p>
+                                <p>Copyright &copy; To Do 2021</p>
                             </div>
                         </footer>
                          {/*}/>*/}
