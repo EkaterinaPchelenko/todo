@@ -4,7 +4,7 @@ import React from 'react'
 class ProjectForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {name: '', users: 0, repository_link:''}
+        this.state = {name: '', users: [], repository_link:''}
     }
 
     handleChange(event) {
@@ -14,6 +14,24 @@ class ProjectForm extends React.Component {
             }
         );
     }
+
+        handleUserChange(event) {
+        if (!event.target.selectedOptions) {
+
+            this.setState({
+                'users': []
+            })
+            return;
+        }
+        let users = []
+        for (let i = 0; i < event.target.selectedOptions.length; i++) {
+            users.push(event.target.selectedOptions.item(i).value)
+        }
+        this.setState({
+            'users': users
+        })
+    }
+
 
     handleSubmit(event) {
 
@@ -32,8 +50,14 @@ class ProjectForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="users">user</label>
 
-                    <input type="number" className="form-control" name="users" value={this.state.users}
-                           onChange={(event) => this.handleChange(event)}/>
+                {/*<select className="form-control" name="users"*/}
+                {/*       onChange={(event) => this.handleChange(event)}>*/}
+                {/*        {this.props.users.map((item) =>*/}
+                {/*        <option value={item.id}>{item.first_name}</option>)}*/}
+                {/*</select>*/}
+                    <select name="users" multiple onChange={(event) => this.handleUserChange(event)}>
+                        {this.props.users.map((item) => <option value={item.id}>{item.first_name}</option>)}
+                    </select>
 
                 </div>
                 <div className="form-group">
