@@ -13,6 +13,9 @@ import NotFound404 from "./components/NotFound404";
 import ToDoList from "./components/todo";
 import LoginForm from "./components/LoginForm";
 import User from "./components/User";
+import ProjectForm from "./components/ProjectForm";
+import ToDoForm from "./components/ToDoForm";
+
 
 
 class App extends React.Component {
@@ -28,7 +31,48 @@ class App extends React.Component {
         }
     }
 
+    createProject(name, users, repository_link){
+        const headers = this.get_headers()
+        const data = {name:name, users:[users], repository_link:repository_link}
+        console.log(name)
+        console.log(users)
+        axios.post(`http://127.0.0.1:8000/api/projects/`, data, {headers}).then(
+            response => {
+                // let new_project = response.data
+                // const users = this.state.users.filter((item) => item.id === new_project.user)[0]
+                // new_project.users = users
+                // this.setState({books:[...this.setState.projects, new_project]})
+
+                this.load_data()
+            }
+        ).catch(error => {
+            console.log(error)
+            this.setState({projects: []})
+        })
+    }
+
+    createToDo(text, creator, project){
+        console.log(text)
+        console.log(creator)
+        console.log(project)
+
+        const headers = this.get_headers()
+        const data = {text:text, creator:creator, project:project}
+        console.log(data)
+        axios.post(`http://127.0.0.1:8000/api/todo/`, data, {headers}).then(
+            response => {
+
+                this.load_data()
+            }
+        ).catch(error => {
+            console.log(error)
+            this.setState({todo: []})
+        })
+    }
+
     deleteProject(id){
+        console.log(id)
+
         const headers = this.get_headers()
         axios.delete(`http://127.0.0.1:8000/api/projects/${id}`, {headers}).then(
             response => {
@@ -48,17 +92,12 @@ class App extends React.Component {
     }
 
     deleteToDo(id){
+        console.log(id)
         const headers = this.get_headers()
-        axios.delete(`http://127.0.0.1:8000/api/todo/${id}`, {headers}).then(
+        axios.delete(`http://127.0.0.1:8000/api/todo/${id}/`, {headers}).then(
             response => {
-                const users = response.data.results
 
-                this.setState(
-                    {
-                        'todo': this.state.todo.filter((item) => item.id !== id)
-                    }
-                )
-                // this.load_data()
+                this.load_data()
             }
         ).catch(error => {
             console.log(error)
@@ -195,6 +234,9 @@ class App extends React.Component {
                                     <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} deleteProject={(id) => this.deleteProject(id)}/>}/>
                                     <Route exact path='/todo' component={() => <ToDoList todo={this.state.todo} deleteToDo={(id) => this.deleteToDo(id)}/>}/>
                                     <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)}/>}/>
+                                    <Route exact path='/projects/create' component={() => <ProjectForm createProject={(name, users, repository_link) => this.createProject(name, users, repository_link)}/>}/>
+                                    <Route exact path='/todo/create' component={() => <ToDoForm createToDo={(text, creator, project) => this.createToDo(text, creator, project)}/>}/>
+
 
                                     <Redirect from='/users' to='/' />
 
