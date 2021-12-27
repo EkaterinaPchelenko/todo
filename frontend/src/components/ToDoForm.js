@@ -23,17 +23,31 @@ class ToDoForm extends React.Component {
             })
             return;
         }
-        let projects = []
-        for (let i = 0; i < event.target.selectedOptions.length; i++) {
-            projects.push(event.target.selectedOptions.item(i).value)
-        }
+        let project = event.target.selectedOptions.item(0).value
+
         this.setState({
-            'projects': projects
+            'projects': project
         })
     }
 
+    handleCreatorChange(event) {
+        if (!event.target.selectedOptions) {
+
+            this.setState({
+                'users': []
+            })
+            return;
+        }
+        let user = event.target.selectedOptions.item(0).value
+        // console.log(user)
+        this.setState({
+            'users': user
+        })
+    }
+
+
     handleSubmit(event) {
-        this.props.createToDo(this.state.text, this.state.creator, this.state.project)
+        this.props.createToDo(this.state.text, this.state.users, this.state.projects)
         // console.log(this.state.text)
         // console.log(this.state.creator)
         // console.log(this.state.project)
@@ -49,15 +63,16 @@ class ToDoForm extends React.Component {
                            onChange={(event) => this.handleChange(event)}/>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="users">creator</label>
+                    <label htmlFor="user">creator</label>
 
-                    <input type="number" className="form-control" name="creator" value={this.state.creator}
-                           onChange={(event) => this.handleChange(event)}/>
+                    <select name="users" onChange={(event) => this.handleCreatorChange(event)}>
+                        {this.props.users.map((item) => <option value={item.id}>{item.first_name}</option>)}
+                    </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="users">project</label>
+                    <label htmlFor="project">project</label>
 
-                    <select name="projects" multiple onChange={(event) => this.handleProjectChange(event)}>
+                    <select name="projects" onChange={(event) => this.handleProjectChange(event)}>
                         {this.props.projects.map((item) => <option value={item.id}>{item.name}</option>)}
                     </select>
                 </div>
