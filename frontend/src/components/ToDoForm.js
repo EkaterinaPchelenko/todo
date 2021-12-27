@@ -15,6 +15,23 @@ class ToDoForm extends React.Component {
         );
     }
 
+    handleProjectChange(event) {
+        if (!event.target.selectedOptions) {
+
+            this.setState({
+                'projects': []
+            })
+            return;
+        }
+        let projects = []
+        for (let i = 0; i < event.target.selectedOptions.length; i++) {
+            projects.push(event.target.selectedOptions.item(i).value)
+        }
+        this.setState({
+            'projects': projects
+        })
+    }
+
     handleSubmit(event) {
         this.props.createToDo(this.state.text, this.state.creator, this.state.project)
         // console.log(this.state.text)
@@ -40,8 +57,9 @@ class ToDoForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="users">project</label>
 
-                    <input type="number" className="form-control" name="project" value={this.state.project}
-                           onChange={(event) => this.handleChange(event)}/>
+                    <select name="projects" multiple onChange={(event) => this.handleProjectChange(event)}>
+                        {this.props.projects.map((item) => <option value={item.id}>{item.name}</option>)}
+                    </select>
                 </div>
                 <input type="submit" className="btn btn-primary" value="Save"/>
             </form>
